@@ -3,6 +3,7 @@
 
 Platform::Platform(void)
 {
+	
 }
 
 

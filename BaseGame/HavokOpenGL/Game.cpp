@@ -41,10 +41,7 @@ void Game::Initialise(){
 
 
 	gameState =  false;
-	droppingY = 0.0f;
-	//oSphere = new OGL_Sphere(pSphere);
-	//oSphere->setRGB(1.0f, 0.0f, 0.0f);	
-	lFact = new LevelFactoryImplementation();
+
 }
 
 void Game::Shutdown(){
@@ -74,23 +71,13 @@ void Game::Update(){
 				m_vdb->step(tbf);	// update VDB when running
 			#endif
 		}
-		/*if(oPlatform){
+		if(oPlatform){
 			oPlatform->update();
-		}*/
-		if(oLevel1){
-			oLevel1->update();
 		}
-		if(oLevel2){
-			oLevel2->update();
-		}
-		if(oBox){
+	
+		/*if(oBox){
 			oBox->update();
-		}
-		toX = level1->getPos().x; toY = level1->getPos().y; toZ = level1->getPos().z;
-
-		//oSphere->update();
-		//if(oSphere->getHavokObj()->getPos().y < -15.0)//to stop error
-		//	gameState = false;
+		}*/
 	}
 	
 
@@ -150,17 +137,7 @@ void Game::Render(){
 	gluLookAt(camX+200, camY+200, camZ, toX, toY, toZ, 0.0f, 1.0f, 0.0f);
 	glEnable(GL_TEXTURE_2D); 
 	if(guiState == GAMESTATE){
-//		oPlatform->render();
-		oBox->render();
-		if(oLevel1){ 
-			oLevel1->render();
-		}
-		if(oLevel2){
-			oLevel2->render();
-		}
-		if(md2m){
-			renderPlayer();
-		}
+		oPlatform->render();
 		
 		/*glLightfv(GL_LIGHT0, GL_POSITION, lightPos);*/
 
@@ -219,26 +196,19 @@ void Game::initPhysicsObjects(){
 
 	m_world->lock();	//****
 
-	/*if(pForm == NULL){
+	if(pForm == NULL){
 		pForm = new box(2.0f,0.1f,2.0f);
 	}
-	pForm->setPos(Vector(1.0f, droppingY, 0.0f));
-	pForm->init(m_world);*/
-	createLevel1();
-	//createLevel2();
-	if(pbox == NULL){
-		pbox = new box(0.5f,0.5f,0.5f);
-	}
-	pbox->setPos(Vector(0.0f, 1.5f, 0.0f));
-	pbox->init(m_world);
-	/*createLevel1();
-	createLevel2();*/
+	pForm->setPos(Vector(0.0f, 0.0f, 0.0f));
+	pForm->init(m_world);
+	
+	//if(pbox == NULL){
+	//	pbox = new box(0.5f,0.5f,0.5f);
+	//}
+	//pbox->setPos(Vector(0.0f, 1.5f, 0.0f));
+	//pbox->init(m_world);
 
-	/*if(pSphere == NULL){
-		pSphere =  new Sphere(2.0f,0.1f,2.0f);
-	}
-	pForm->setPos(Vector(1.2f, 1.2f, 0.0f));
-	pSphere->init(m_world);*/
+
 
 	hkpGenericConstraintData* data = new hkpGenericConstraintData();	// Create constraint on the level
 	hkpConstraintConstructionKit kit;
@@ -265,23 +235,15 @@ void Game::initPhysicsObjects(){
 void Game::removeGameObjects(){
 	guiState = ENDSTATE;
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	//pForm->removeRigidBody(m_world);
-//	delete pForm;
-	//pForm = NULL;
-	pbox->removeRigidBody(m_world);
+	pForm->removeRigidBody(m_world);
+	delete pForm;
+	pForm = NULL;
+	/*pbox->removeRigidBody(m_world);
 	delete pbox;
 	pbox = NULL;
-	//delete pSphere;
-	//delete oPlatform;
-	//oPlatform = NULL;
-	delete oBox;
-	oBox = NULL;
-	delete oLevel1;
-	oLevel1 = NULL;
-	delete oLevel2;
-	oLevel2 = NULL;
-	destroyLevel1();
-	//destroyLevel2();
+*/
+	delete oPlatform;
+	oPlatform = NULL;
 
 	glDisable(GL_LIGHTING);
 	glDisable(GL_LIGHT0);
@@ -293,28 +255,18 @@ void Game::createGameObjects(){
 	initPhysicsObjects();
 	
 	intCalled = true;
-	//}
-	/*if(oSphere == NULL){
-		oSphere = new OGL_Sphere(pSphere);
-	}
-	oSphere->setRGB(1.0f, 0.0f, 0.0f);*/
+	
 	if(oPlatform == NULL){
-//		oPlatform = new OGL_Box(pForm);
+		oPlatform = new OGL_Box(pForm);
 	}
-	if(oBox == NULL){
+	/*if(oBox == NULL){
 		oBox = new OGL_Box(pbox);
-	}
+	}*/
 	
 	
-	//oPlatform->setRGB(1.0f, 0.5f, 0.5f);
-	oBox->setRGB(0.0f, 0.0f, 1.0f);
+	oPlatform->setRGB(1.0f, 0.5f, 0.5f);
+	/*oBox->setRGB(0.0f, 0.0f, 1.0f);*/
 
-	md2m = new MD2Model;
-	md2m->LoadMD2Model("Data/pknight/pknight.md2", "Data/pknight/pknight.bmp");
-	md2m->pos = Vector(0.0f, 0.0f, 0.0f);	
-	
-
-	//
 	//float matSpec[] = {0.0f, 1.0f, 0.0f, 1.0f };
 	//float matShiny[] = {50.0 };  //128 is max value
 	//glMaterialfv(GL_FRONT, GL_AMBIENT, matSpec);
@@ -330,9 +282,6 @@ void Game::createGameObjects(){
 
 	//glEnable(GL_LIGHTING);
 	//glEnable(GL_LIGHT0);
-
-
-	
 
 	guiState = GAMESTATE;
 }

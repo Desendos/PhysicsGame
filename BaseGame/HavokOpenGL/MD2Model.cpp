@@ -39,19 +39,20 @@ MD2Model::~MD2Model(){
 
 texture_t* MD2Model::LoadBMPTexture(char *filename){
 	texture_t *thisTexture;			// the texture
-	LoadTextures *lt = new LoadTextures(filename);
-	
-	thisTexture = new texture_t();
-	thisTexture->texID = lt->getNum();
-	thisTexture->height = lt->textureImage.bmHeight;
-	thisTexture->width = lt->textureImage.bmWidth;
-	thisTexture->palette = NULL;
-	thisTexture->scaledHeight = 0;
-	thisTexture->scaledWidth = 0;
-	thisTexture->textureType = BMP;	
-	
-	delete lt;
+	//LoadTextures *lt = new LoadTextures(filename);
+	//
+	//thisTexture = new texture_t();
+	//thisTexture->texID = lt->getNum();
+	//thisTexture->height = lt->textureImage.bmHeight;
+	//thisTexture->width = lt->textureImage.bmWidth;
+	//thisTexture->palette = NULL;
+	//thisTexture->scaledHeight = 0;
+	//thisTexture->scaledWidth = 0;
+	//thisTexture->textureType = BMP;	
+	//
+	//delete lt;
 	return thisTexture;
+	
 }
 
 

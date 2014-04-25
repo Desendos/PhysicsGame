@@ -6,6 +6,7 @@ class Platform :
 public:
 	Platform(void);
 	~Platform(void);
+
 	void init(hkpWorld* world);
 };
 

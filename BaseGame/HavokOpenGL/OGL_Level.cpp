@@ -54,10 +54,9 @@ void OGL_Level::setSize(float sx,float sy, float sz){
 }
 
 void OGL_Level::reloadTextures(){
-	for(int i = 0; i < 6; i++){
-	LoadTextures *lt = new LoadTextures("Images/rock.bmp");
-	if (!lt) return; 
-	texNum = lt->getTexture();
-	delete lt;
-}
+	//for(int i = 0; i < 6; i++){
+	//LoadTextures *lt = new LoadTextures("Images/rock.bmp");
+	//if (!lt) return; 
+	//texNum = lt->getTexture();
+	//delete lt;
 }
