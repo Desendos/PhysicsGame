@@ -20,8 +20,6 @@ using namespace timer;
 
 #include "LevelFactoryImplementation.h"
 #include "Level.h"
-#include "MD2Model.h"
-
 
 using namespace random;
 using namespace std;
@@ -68,10 +66,6 @@ private:
 	Level* level2;
 	OGL_Level* oLevel2;
 	LevelFactory* lFact;
-
-	MD2Model * md2m;
-	float lightPos[4];
-	float toX,toY,toZ;
 
 	hkpWorld* m_world;		// Havok persistent objects
 	#ifdef _DEBUG
@@ -139,6 +133,4 @@ public:
 	void destroyLevel1();
 	void destroyLevel2();
 	void dropBall();
-	void moveRotation(Level* lev);
-	void renderPlayer();
 };

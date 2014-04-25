@@ -65,8 +65,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam){
 				case VK_TAB:
 					g_Game.destroyLevel1();
 					g_Game.createLevel1();
-				case VK_DOWN:
-					g_Game.moveRotation(g_Game.level1);
 
 				default:
 					break;
@@ -83,7 +81,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam){
 			// Track the mouse position
 			g_Game.mouseX = LOWORD(lParam);
 			g_Game.mouseY = HIWORD(lParam);
-			g_Game.CameraPos();
 			break;
 		case WM_MOUSEWHEEL:
 			if(GET_WHEEL_DELTA_WPARAM(wParam) < 0)  //chk dir of scroll wheel

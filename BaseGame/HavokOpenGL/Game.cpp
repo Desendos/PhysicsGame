@@ -1,13 +1,5 @@
 #include "Game.h"
 
-Vector NormToPlane(Vector p1, Vector p2, Vector p3){	
-	Vector v1, v2, n;
-	v1 = p1 - p2;
-	v2 = p3 - p2;
-	n = v1.CrossProduct(v2);
-	if(n.Length() > 0) n.Normalize();
-	return n;
-}
 
 Game::Game(void){
 	mouseX = mouseY = 0;
@@ -38,8 +30,6 @@ void Game::Initialise(){
 	if(font1 == NULL){
 		font1 = new BFont(hDC, "Courier", 14);
 	}
-
-
 	gameState =  false;
 	droppingY = 0.0f;
 	//oSphere = new OGL_Sphere(pSphere);
@@ -86,7 +76,6 @@ void Game::Update(){
 		if(oBox){
 			oBox->update();
 		}
-		toX = level1->getPos().x; toY = level1->getPos().y; toZ = level1->getPos().z;
 
 		//oSphere->update();
 		//if(oSphere->getHavokObj()->getPos().y < -15.0)//to stop error
@@ -147,8 +136,7 @@ void Game::renderEndMenu(){
 // Render the objects in their current state.
 void Game::Render(){
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	gluLookAt(camX+200, camY+200, camZ, toX, toY, toZ, 0.0f, 1.0f, 0.0f);
-	glEnable(GL_TEXTURE_2D); 
+	gluLookAt(camX,camY+10,camZ, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f);
 	if(guiState == GAMESTATE){
 //		oPlatform->render();
 		oBox->render();
@@ -158,12 +146,7 @@ void Game::Render(){
 		if(oLevel2){
 			oLevel2->render();
 		}
-		if(md2m){
-			renderPlayer();
-		}
-		
-		/*glLightfv(GL_LIGHT0, GL_POSITION, lightPos);*/
-
+//		oSphere->update();
 	}
 	if(guiState == MAINSTATE){
 		renderMainMenu();	
@@ -171,25 +154,23 @@ void Game::Render(){
 	if(guiState == ENDSTATE){
 		renderEndMenu();	
 	}
-	glDisable(GL_TEXTURE_2D);
 
 	RenderHUD();
 	fCount++;
 }
 
 void Game::CameraPos(){
-	// Map the mouse position to two angles
-	angNS = ((mouseY + 1) / m_height) * (float)M_PI;
+	angNS = ((mouseY + 1) / m_height) * (float)M_PI;  // Map the mouse position to two angles
 	angEW = (mouseX / m_width) * 2 * (float)M_PI;
-	// Calculate the sines and cosines of these angle
-	float sinNS = sin(angNS);
+	
+	float sinNS = sin(angNS);  // Calculate the sines and cosines of these angles
 	float cosNS = cos(angNS);
 	float sinEW = sin(angEW);
 	float cosEW = cos(angEW);
-	// calculate the camera coordinate
-	camZ = toZ + camRad * sinNS * cosEW;
-	camY = toY + camRad * cosNS;
-	camX = toX + camRad * sinNS * sinEW;
+	
+	camZ = camRad * sinNS * cosEW;  // calculate the camera coordinate
+	camY = camRad * cosNS;
+	camX= camRad * sinNS * sinEW;
 }
 
 void Game::initPhysicsObjects(){
@@ -282,9 +263,6 @@ void Game::removeGameObjects(){
 	oLevel2 = NULL;
 	destroyLevel1();
 	//destroyLevel2();
-
-	glDisable(GL_LIGHTING);
-	glDisable(GL_LIGHT0);
 	
 }
 
@@ -309,29 +287,6 @@ void Game::createGameObjects(){
 	//oPlatform->setRGB(1.0f, 0.5f, 0.5f);
 	oBox->setRGB(0.0f, 0.0f, 1.0f);
 
-	md2m = new MD2Model;
-	md2m->LoadMD2Model("Data/pknight/pknight.md2", "Data/pknight/pknight.bmp");
-	md2m->pos = Vector(0.0f, 0.0f, 0.0f);	
-	
-
-	//
-	//float matSpec[] = {0.0f, 1.0f, 0.0f, 1.0f };
-	//float matShiny[] = {50.0 };  //128 is max value
-	//glMaterialfv(GL_FRONT, GL_AMBIENT, matSpec);
-	//glMaterialfv(GL_FRONT, GL_SPECULAR, matSpec);
-	//glMaterialfv(GL_FRONT, GL_SHININESS, matShiny);
-	//lightPos[0]=0; lightPos[1]= 0; lightPos[2]= 0; lightPos[3]=1.0f;
-	//float whiteLight[] = {2.0f, 2.0f, 2.0f, 1.0f };
-	//float ambLight[] = {1.0f, 1.0f, 1.0f, 1.0f };
-	//glLightfv(GL_LIGHT0, GL_POSITION, lightPos);
-	//glLightfv(GL_LIGHT0, GL_DIFFUSE, whiteLight);
-	//glLightfv(GL_LIGHT0, GL_SPECULAR, whiteLight);
-	//glLightModelfv(GL_LIGHT_MODEL_AMBIENT, ambLight);
-
-	//glEnable(GL_LIGHTING);
-	//glEnable(GL_LIGHT0);
-
-
 	
 
 	guiState = GAMESTATE;
@@ -339,7 +294,7 @@ void Game::createGameObjects(){
 
 void Game::createLevel1(){
 	if(level1 == NULL){
-		level1 = lFact->createLevel(Normal, 20.0f,0.1f,20.0f);
+		level1 = lFact->createLevel(Normal, 2.0f,0.1f,2.0f);
 	}
 	droppingY = droppingY - 1.0f;
 	level1->setPos(Vector(0.0f, droppingY, 0.0f));
@@ -348,7 +303,6 @@ void Game::createLevel1(){
 		oLevel1 = new OGL_Level(level1);
 	}
 	oLevel1->setRGB(1.0f, 1.0f, 1.0f);
-	oLevel1->reloadTextures();
 }
 
 void Game::createLevel2(){
@@ -382,20 +336,4 @@ void Game::destroyLevel2(){
 
 void Game::dropBall(){
 	pbox->setPos(Vector(0.0f, 3.0f, 0.0f));
-	level1->setDir(level1->getDir() + Vector(0.0f,1.0f,0.0f));
-}
-
-void Game::moveRotation(Level* lev){
-	lev->setRot();
-}
-
-void Game::renderPlayer(){
-	glEnable(GL_TEXTURE_2D);
-	glColor3f(1.0, 1.0, 1.0);
-	glPushMatrix();
-	glTranslatef(md2m->pos.x, md2m->pos.y, md2m->pos.z);	
-		glRotatef(90.0f, -1.0f, 0.0f, 0.0f);
-		md2m->DisplayMD2(0);  //display frame 0
-	glPopMatrix();
-	glDisable(GL_TEXTURE_2D);
 }

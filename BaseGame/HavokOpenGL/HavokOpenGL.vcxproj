@@ -93,7 +93,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="AABB3.cpp" />
     <ClCompile Include="BaseGame.cpp" />
     <ClCompile Include="BFont.cpp" />
     <ClCompile Include="box.cpp" />
@@ -106,9 +105,7 @@
     <ClCompile Include="LevelFactory.cpp" />
     <ClCompile Include="LevelFactoryImplementation.cpp" />
     <ClCompile Include="LevelNormal.cpp" />
-    <ClCompile Include="LoadTextures.cpp" />
     <ClCompile Include="Main.cpp" />
-    <ClCompile Include="MD2Model.cpp" />
     <ClCompile Include="OGL_Box.cpp" />
     <ClCompile Include="OGL_Level.cpp" />
     <ClCompile Include="OGL_Sphere.cpp" />
@@ -117,7 +114,6 @@
     <ClCompile Include="Sphere.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="AABB3.h" />
     <ClInclude Include="BaseGame.h" />
     <ClInclude Include="BFont.h" />
     <ClInclude Include="box.h" />
@@ -132,9 +128,6 @@
     <ClInclude Include="LevelFactory.h" />
     <ClInclude Include="LevelFactoryImplementation.h" />
     <ClInclude Include="LevelNormal.h" />
-    <ClInclude Include="LoadTextures.h" />
-    <ClInclude Include="md2.h" />
-    <ClInclude Include="MD2Model.h" />
     <ClInclude Include="OGL_Box.h" />
     <ClInclude Include="OGL_Level.h" />
     <ClInclude Include="OGL_Sphere.h" />
@@ -144,11 +137,6 @@
     <ClInclude Include="Sphere.h" />
     <ClInclude Include="Timer.h" />
     <ClInclude Include="vector.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Images\green.bmp" />
-    <None Include="Images\rock.bmp" />
-    <None Include="Images\Terrain.bmp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
