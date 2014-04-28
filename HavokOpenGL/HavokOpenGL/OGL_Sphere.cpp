@@ -3,8 +3,12 @@
 
 
 OGL_Sphere::OGL_Sphere(Sphere* hvkBox) : HvkOGLObj(hvkBox){
-	setSize(hvkBox->sx, hvkBox->sy, hvkBox->sz);
+	setSize(hvkBox->getRadius());
+	
 	setRGB();
+	colSphere = gluNewQuadric();
+	gluQuadricDrawStyle(colSphere, GLU_LINE);
+	gluQuadricNormals(colSphere, GLU_NONE);
 }
 
 void OGL_Sphere::render(){
@@ -13,16 +17,20 @@ void OGL_Sphere::render(){
 		// Perform transformations here in TRS order
 		glTranslatef(hObj->getPos().x, hObj->getPos().y, hObj->getPos().z);
 		glRotatef(angle,hObj->getDir().x,hObj->getDir().y,hObj->getDir().z);
-		drawFace(0, 4, 5, 1); // Draw each face
-		drawFace(3, 7, 4, 0);
-		drawFace(2, 6, 7, 3);
-		drawFace(1, 5, 6, 2);
-		drawFace(3, 0, 1, 2);
-		drawFace(4, 7, 6, 5);
+		//drawFace(0, 4, 5, 1); // Draw each face
+		//drawFace(3, 7, 4, 0);
+		//drawFace(2, 6, 7, 3);
+		//drawFace(1, 5, 6, 2);
+		//drawFace(3, 0, 1, 2);
+		//drawFace(4, 7, 6, 5);
+		glColor3f(1.0f, 0.0f, 0.5f);
+		gluSphere(colSphere, 0.5, 10, 6);
 	glPopMatrix();
 }
 
 OGL_Sphere::~OGL_Sphere(void){
+	if(colSphere != NULL)
+		gluDeleteQuadric(colSphere);
 }
 
 void OGL_Sphere::drawFace(int v0, int v1, int v2, int v3){
@@ -34,14 +42,10 @@ void OGL_Sphere::drawFace(int v0, int v1, int v2, int v3){
 	glEnd();
 }
 
-void OGL_Sphere::setSize(float sx,float sy, float sz){
-	verts[0].set(-sx, sy, sz);
-	verts[1].set( sx, sy, sz);
-	verts[2].set( sx, sy,-sz);
-	verts[3].set(-sx, sy,-sz);
-	verts[4].set(-sx,-sy, sz);
-	verts[5].set( sx,-sy, sz);
-	verts[6].set( sx,-sy,-sz);
-	verts[7].set(-sx,-sy,-sz);
+void OGL_Sphere::setSize(float size){
+	float s = (float) size;
+	float hs = size * size;
+
+	csRadius = hs * sqrt(3.0f);
 }
 

@@ -1,11 +1,11 @@
 #pragma once
 #include "hvkoglobj.h"
-#include "box.h"
+#include "Box.h"
 class OGL_Box :
 	public HvkOGLObj
 {
 public:
-	OGL_Box(box* hvkBox);
+	OGL_Box(Box* hvkBox);
 	~OGL_Box(void);
 
 	Vector verts[8];

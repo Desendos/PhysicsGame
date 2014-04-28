@@ -4,31 +4,30 @@
 #include <string>
 #include "BFont.h"
 #include "Timer.h"
+#include "HavokInit.h"
 using namespace timer;
 
 #define _USE_MATH_DEFINES
 #include <math.h>
 #include "random.h"
-#include "HavokInit.h"
-#include "Platform.h"
-#include "box.h"
-#include "Sphere.h"
-
-#include "OGL_Box.h"
-#include "OGL_Sphere.h"
-#include "OGL_Level.h"
-
-#include "LevelFactoryImplementation.h"
-#include "Level.h"
-
 using namespace random;
 using namespace std;
 
 const float VIEW_ANGLE = 50.0f; // field of view in the Y direction
 const float NEAR_CLIPPING = 0.05f; // near clipping distance (5cm)
 const float FAR_CLIPPING = 1000.0f; // far clipping distance (10m)
-const float ANGLE_LIMIT = 7.0f * HK_REAL_PI/180.0f; // 7 degrees limit
-enum guistate {MAINSTATE,GAMESTATE,ENDSTATE};
+const int ARRAY_BOX_NUMBER = 4;
+const int ARRAY_WALL_NUMBER = 3;
+
+//MY CLASSES
+#include "Platform.h"
+#include "Box.h"
+#include "OGL_Box.h"
+#include "Sphere.h"
+#include "OGL_Sphere.h"
+#include "Marker.h"
+
+const float ANGLE_LIMIT = 30.0f * HK_REAL_PI/180.0f; // 7 degrees limit
 
 
 /**
@@ -43,9 +42,6 @@ private:
 	int mouseX, mouseY;
 	float camX, camY, camZ, camRad;
 	float angEW, angNS;
-	int guiState;
-	bool intCalled;
-	float droppingY;
 
 	BFont* font1;
 	char text[256];
@@ -53,27 +49,37 @@ private:
 	Timer* timer;
 	float cft, lft, tbf, fps, avgFps;
 	unsigned int fCount;
+	// HERE WE DECLARE ANY GAME OBJECTS AND CREATE THEM IN THE INITIALISE function
 
-	box* pForm;
-	box* pbox;
-	Sphere* pSphere;
-	OGL_Box* oPlatform;
-	OGL_Box* oBox;
-	OGL_Sphere* oSphere;
-
-	Level* level1;
-	OGL_Level* oLevel1;
-	Level* level2;
-	OGL_Level* oLevel2;
-	LevelFactory* lFact;
-
+	//HAVOK
 	hkpWorld* m_world;		// Havok persistent objects
 	#ifdef _DEBUG
 		hkVisualDebugger* m_vdb;
 		hkpPhysicsContext* m_physicsContext;
 	#endif
-	// HERE WE DECLARE ANY GAME OBJECTS AND CREATE THEM IN THE INITIALISE function
+	///////
+
+	//Physics objects
+	Box* pForm;
+	Box* pBox;
+	Box* pBoxArray[ARRAY_BOX_NUMBER];
+	Sphere* pSphere;
+	Box* pWall[ARRAY_WALL_NUMBER];
+	//OpenGL objects
+	OGL_Box* oPlatform;
+	OGL_Box* oBox;
+	OGL_Box* oBoxArray[ARRAY_BOX_NUMBER];
+	OGL_Sphere* oSphere;
+	Marker* mark;
+	OGL_Box* oWall[ARRAY_WALL_NUMBER];
+	Marker* goal;
+
+	float toX,toY,toZ;
+	bool placingWalls;
+	int wallNumber;
 public:
+	bool physicsState;
+
 	Game(void);
 	virtual ~Game(void);
 
@@ -120,17 +126,17 @@ public:
 	*/
 	void RenderHUD();
 
-	bool gameState;
-
 	void initPhysicsObjects();
-	void removeGameObjects();
-	void createGameObjects();
-	void renderMainMenu();
-	void renderEndMenu();
+	void makeWall();
 
-	void createLevel1();
-	void createLevel2();
-	void destroyLevel1();
-	void destroyLevel2();
-	void dropBall();
+	void moveWeight1Up();
+	void moveWeight1Down();
+	void moveWeight2Up();
+	void moveWeight2Down();
+	void makeWeightsJump();
+
+	void moveMarkerUp();
+	void moveMarkerDown();
+	void moveMarkerRight();
+	void moveMarkerLeft();
 };

@@ -20,12 +20,10 @@
     <ConfigurationType>Application</ConfigurationType>
     <CharacterSet>Unicode</CharacterSet>
     <WholeProgramOptimization>true</WholeProgramOptimization>
-    <PlatformToolset>100</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <CharacterSet>MultiByte</CharacterSet>
-    <PlatformToolset>v100</PlatformToolset>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -45,10 +43,9 @@
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(SolutionDir)$(Configuration)\</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(Configuration)\</IntDir>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkIncremental>
-    <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">C:\Temp\Havok\Havok\Source;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>C:\Temp\Havok\Havok\Source;$(IncludePath)</IncludePath>
+    <IncludePath>C:\temp\Havok\Havok\Source;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -63,11 +60,11 @@
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>opengl32.lib;glu32.lib;odbc32.lib;odbccp32.lib;winmm.lib;hkBase.lib;hkSceneData.lib;hkSerialize.lib;hkInternal.lib;hkGeometryUtilities.lib;hkVisualize.lib;hkcdInternal.lib;hkcdCollide.lib;hkpCollide.lib;hkpConstraintSolver.lib;hkpDynamics.lib;hkpInternal.lib;hkpUtilities.lib;hkpVehicle.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>hkBase.lib;hkSceneData.lib;hkSerialize.lib;hkInternal.lib;hkGeometryUtilities.lib;hkVisualize.lib;hkcdInternal.lib;hkcdCollide.lib;hkpCollide.lib;hkpConstraintSolver.lib;hkpDynamics.lib;hkpInternal.lib;hkpUtilities.lib;hkpVehicle.lib;opengl32.lib;glu32.lib;odbc32.lib;odbccp32.lib;winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <TargetMachine>MachineX86</TargetMachine>
-      <AdditionalLibraryDirectories>C:\Temp\Havok\Havok\Lib\win32_vs2010\debug_multithreaded_dll;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\temp\Havok\Havok\Lib\win32_vs2010\debug_multithreaded_dll;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -88,50 +85,37 @@
       <OptimizeReferences>true</OptimizeReferences>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <TargetMachine>MachineX86</TargetMachine>
-      <AdditionalLibraryDirectories>C:\Temp\Havok\Havok\Lib\win32_vs2010\release_multithreaded_dll;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>opengl32.lib;glu32.lib;odbc32.lib;odbccp32.lib;winmm.lib;hkBase.lib;hkSceneData.lib;hkSerialize.lib;hkInternal.lib;hkGeometryUtilities.lib;hkVisualize.lib;hkcdInternal.lib;hkcdCollide.lib;hkpCollide.lib;hkpConstraintSolver.lib;hkpDynamics.lib;hkpInternal.lib;hkpUtilities.lib;hkpVehicle.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\temp\Havok\Havok\Lib\win32_vs2010\release_multithreaded_dll;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="BaseGame.cpp" />
     <ClCompile Include="BFont.cpp" />
-    <ClCompile Include="box.cpp" />
-    <ClCompile Include="EnemyLevel.cpp" />
+    <ClCompile Include="Box.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="HavokObj.cpp" />
     <ClCompile Include="HvkOGLObj.cpp" />
-    <ClCompile Include="IceLevel.cpp" />
-    <ClCompile Include="Level.cpp" />
-    <ClCompile Include="LevelFactory.cpp" />
-    <ClCompile Include="LevelFactoryImplementation.cpp" />
-    <ClCompile Include="LevelNormal.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="Marker.cpp" />
     <ClCompile Include="OGL_Box.cpp" />
     <ClCompile Include="OGL_Level.cpp" />
     <ClCompile Include="OGL_Sphere.cpp" />
-    <ClCompile Include="PickupLevel.cpp" />
     <ClCompile Include="Platform.cpp" />
     <ClCompile Include="Sphere.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BaseGame.h" />
     <ClInclude Include="BFont.h" />
-    <ClInclude Include="box.h" />
+    <ClInclude Include="Box.h" />
     <ClInclude Include="DebugPrint.h" />
-    <ClInclude Include="EnemyLevel.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="HavokInit.h" />
     <ClInclude Include="HavokObj.h" />
     <ClInclude Include="HvkOGLObj.h" />
-    <ClInclude Include="IceLevel.h" />
-    <ClInclude Include="Level.h" />
-    <ClInclude Include="LevelFactory.h" />
-    <ClInclude Include="LevelFactoryImplementation.h" />
-    <ClInclude Include="LevelNormal.h" />
+    <ClInclude Include="Marker.h" />
     <ClInclude Include="OGL_Box.h" />
     <ClInclude Include="OGL_Level.h" />
     <ClInclude Include="OGL_Sphere.h" />
-    <ClInclude Include="PickupLevel.h" />
     <ClInclude Include="Platform.h" />
     <ClInclude Include="random.h" />
     <ClInclude Include="Sphere.h" />

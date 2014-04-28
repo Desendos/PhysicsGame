@@ -3,6 +3,7 @@
 #include "HavokInit.h"	//for Havok
 #include "Vector.h"	
 
+
 /*
 	Abstract Base Class for storing a Havok Rigid body object
 */
@@ -27,6 +28,9 @@ public:
 	void setDensity(float d){ density = d; }
 	void setRadius(float r){ radius = r; }
 	float getRadius(){ return radius; }
-	void  setRigidBodyInfo(hkpWorld *world, hkpShape *hks, float mass);
+
+	void setRigidBodyInfo(hkpWorld *world, hkpShape *hks, float mass);
+	void setRigidBodyInfoFixed(hkpWorld *world, hkpShape *hks, float mass);
+	void setPosAfter();
 	void removeRigidBody(hkpWorld *world);
 };

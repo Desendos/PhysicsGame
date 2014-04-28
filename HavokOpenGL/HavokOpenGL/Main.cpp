@@ -1,6 +1,8 @@
 // Initial OpenGL Framework
 // DO not modify this project. Use a copy of it.
 #include "Game.h"
+#include "key_codes.h"
+////////////////////////////////////////////////////////////////////
 #include <Common/Base/keycode.cxx>	// MUST be in main file!!!
 // we're not using any product apart from Havok Physics.
 #ifdef HK_FEATURE_PRODUCT_AI
@@ -61,11 +63,48 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam){
 					PostQuitMessage(0);
 					break;
 				case VK_SPACE:
-					g_Game.gameState = true;
-				case VK_TAB:
-					g_Game.destroyLevel1();
-					g_Game.createLevel1();
-
+					g_Game.physicsState = true;
+					break;
+				case VK_LCONTROL:
+					
+					break;
+				case VK_UP:
+					g_Game.moveWeight1Up();
+					break;
+				case VK_DOWN:
+					g_Game.moveWeight1Down();
+					break;
+				case VK_RIGHT:
+					g_Game.moveWeight2Up();
+					break;
+				case VK_LEFT:
+					g_Game.moveWeight2Down();
+					break;
+				case VK_F1:
+					g_Game.placingWalls = !g_Game.placingWalls;
+					break;
+				case VK_W:
+					g_Game.moveMarkerDown();
+					break;
+				case VK_S:
+					g_Game.moveMarkerUp();
+					break;
+				case VK_A:
+					g_Game.moveMarkerLeft();
+					break;
+				case VK_D:
+					g_Game.moveMarkerRight();
+					break;
+				case VK_R:
+					g_Game.makeWall();
+					break;
+				case VK_Q:
+					g_Game.makeWeightsJump();
+					break;
+				case VK_U:
+					delete g_Game.goal;
+					 g_Game.goal = NULL;
+					break;
 				default:
 					break;
 			}
@@ -81,6 +120,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam){
 			// Track the mouse position
 			g_Game.mouseX = LOWORD(lParam);
 			g_Game.mouseY = HIWORD(lParam);
+			g_Game.CameraPos();
 			break;
 		case WM_MOUSEWHEEL:
 			if(GET_WHEEL_DELTA_WPARAM(wParam) < 0)  //chk dir of scroll wheel
@@ -90,20 +130,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam){
 			g_Game.CameraPos();
 			break;
 		case WM_LBUTTONDOWN:
-			if(g_Game.guiState == MAINSTATE){
-				g_Game.createGameObjects();
-				break;
-			}
-			if(g_Game.guiState == GAMESTATE){
-				g_Game.removeGameObjects();
-				break;
-			}
-			if(g_Game.guiState == ENDSTATE){
-				g_Game.Initialise();
-			}
 			break;
 		case WM_RBUTTONDOWN:
-			//g_Game.dropBall();
 			break;
 	}
 	return DefWindowProc(hWnd, uMsg, wParam, lParam);

@@ -1,6 +1,6 @@
 #include "OGL_Box.h"
 
-OGL_Box::OGL_Box(box* hvkBox) : HvkOGLObj(hvkBox){
+OGL_Box::OGL_Box(Box* hvkBox) : HvkOGLObj(hvkBox){
 	setSize(hvkBox->sx, hvkBox->sy, hvkBox->sz);
 	setRGB();
 }

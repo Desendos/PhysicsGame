@@ -23,10 +23,10 @@ void Sphere::init(hkpWorld *world){
 	rigidBodyInfo.m_position.set(1.0, 1.2, 0.0);
 	rigidBodyInfo.m_friction = 0.4f;
 	rigidBodyInfo.m_restitution = 0.2f;
-	setRigidBodyInfo(world, sphere, HK_REAL_PI);
 
 	rb = new hkpRigidBody(rigidBodyInfo);
 	sphere->removeReference();
 	world->addEntity(rb);
 	rb->removeReference();
+
 }
