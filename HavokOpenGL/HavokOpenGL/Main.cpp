@@ -102,8 +102,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam){
 					g_Game.makeWeightsJump();
 					break;
 				case VK_U:
-					delete g_Game.goal;
-					 g_Game.goal = NULL;
+					
 					break;
 				default:
 					break;

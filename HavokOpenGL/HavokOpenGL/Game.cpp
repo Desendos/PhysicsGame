@@ -1,7 +1,6 @@
 #include "Game.h"
 #include "Box.h"
 
-
 Game::Game(void){
 	mouseX = mouseY = 0;
 	camX = 0.0f;
@@ -11,6 +10,8 @@ Game::Game(void){
 	physicsState = false;
 	placingWalls = false;
 	wallNumber = 0;
+	isColliding = false;
+	m_sEngine = createIrrKlangDevice();
 }
 
 Game::~Game(void){
@@ -43,9 +44,9 @@ void Game::Initialise(){
 	mark->setPos(0.0,0.8,3.0);
 	mark->setRGB(0.0,1.0,0.0);
 
-	goal = new Marker(0.2,0.2,0.2);
-	goal->setPos(1.8,1.0,0.0);
-	goal->setRGB(0.0,1.0,1.0);
+	makeGoal();
+
+	m_sEngine->play2D("Sounds/Kevin_MacLeod_-_Funeral_March_for_Brass.mp3", true);
 
 }
 
@@ -77,6 +78,14 @@ void Game::Update(){
 	//Object Updates
 	oPlatform->update();
 	/*oSphere->update();*/
+	if(goal){
+		isColliding = mark->collides(goal);
+		if(isColliding == true){
+			delete goal;
+			goal = NULL;
+			makeGoal();
+		}
+	}
 //	oBox->update();
 	for(int i = 0; i < ARRAY_BOX_NUMBER; i++){
 		oBoxArray[i]->update();
@@ -86,7 +95,7 @@ void Game::Update(){
 			oWall[i]->update();
 		}
 	}
-	mark->collides(goal);
+	
 	//Camera
 	toX = pForm->getPos().x; toY = pForm->getPos().y; toZ = pForm->getPos().z;
 }
@@ -290,12 +299,23 @@ void Game::makeWeightsJump(){
 void Game::moveMarkerUp(){
 	mark->setPos(mark->px+0.1, mark->py, mark->pz);
 }
+
 void Game::moveMarkerDown(){
 	mark->setPos(mark->px-0.1, mark->py, mark->pz);
 }
+
 void Game::moveMarkerLeft(){
 	mark->setPos(mark->px, mark->py, mark->pz+0.1);
 }
+
 void Game::moveMarkerRight(){
 	mark->setPos(mark->px, mark->py, mark->pz-0.1);
+}
+
+void Game::makeGoal(){
+	goal = new Marker(0.2,0.2,0.2);
+	float randX = rnd.number(-2.0f,2.0f);
+	float randZ = rnd.number(-2.0f,2.0f);
+	goal->setPos(randX,0.2,randZ);
+	goal->setRGB(0.0,1.0,1.0);
 }

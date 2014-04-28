@@ -11,6 +11,9 @@ Marker::Marker(float x, float y, float z)
 	mr = 0.0;
 	mg = 0.0;
 	mb = 0.0;
+	Dx = 1;
+	Dy = 1;
+	Dz = 1;
 }
 
 
@@ -68,11 +71,39 @@ void Marker::setRGB(float r, float g, float b){
 	mb = b;
 }
 
-void Marker::collides(Marker* mark){
-	float d2 = Vector::Dist2(pos, mark->pos);
-	float sr2 = (sx/2 + mark->sx/2) * (sx/2 + mark->sx/2);
-	if(d2 < sr2){
-		delete mark;
-		mark = NULL;
+bool Marker::collides(Marker* mark){
+	
+	float hsxA = sx/2;
+	float hsxB = mark->sx/2;
+	if(px < mark->px){
+		Dx = (mark->px - hsxB) - (px + hsxA);
+	}
+	else{
+		Dx = (px - hsxB) - (mark->px + hsxA);
+	}
+
+	//float hsyA = sy/2;
+	//float hsyB = mark->sy/2;
+	//if(py < mark->py){
+	//	Dy = (mark->py - hsyB) - (py + hsyA);
+	//}
+	//else{
+	//	Dy = (py - hsyB) - (mark->py + hsyA);
+	//}
+
+	float hszA = sz/2;
+	float hszB = mark->sz/2;
+	if(pz < mark->pz){
+		Dz = (mark->pz - hszB) - (pz + hszA);
+	}
+	else{
+		Dz = (pz - hszB) - (mark->pz + hszA);
+	}
+
+	if(Dx <= 0 &&/* Dy <= 0 ||*/ Dz <= 0){
+		return true;
+	}
+	else{
+		return false;
 	}
 }

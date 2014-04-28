@@ -6,6 +6,7 @@
 
 #include "vector.h"
 
+
 class Marker
 {
 public:
@@ -19,10 +20,11 @@ public:
 	void drawFace(int v0, int v1, int v2, int v3);
 	void setPos(float x, float y, float z);
 	void setRGB(float r, float g, float b);
-	void collides(Marker* mark);
+	bool collides(Marker* mark);
 	float sx, sy, sz;
 	float px,py,pz;
 	float mr, mg, mb;
+	float Dx,Dy,Dz;
 	Vector pos;
 };
 

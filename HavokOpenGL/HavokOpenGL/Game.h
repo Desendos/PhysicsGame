@@ -5,6 +5,9 @@
 #include "BFont.h"
 #include "Timer.h"
 #include "HavokInit.h"
+
+#include <irrKlang.h>
+
 using namespace timer;
 
 #define _USE_MATH_DEFINES
@@ -27,8 +30,9 @@ const int ARRAY_WALL_NUMBER = 3;
 #include "OGL_Sphere.h"
 #include "Marker.h"
 
-const float ANGLE_LIMIT = 30.0f * HK_REAL_PI/180.0f; // 7 degrees limit
+using namespace irrklang;
 
+const float ANGLE_LIMIT = 7.0f * HK_REAL_PI/180.0f; // 7 degrees limit
 
 /**
 The class inherits from BaseGame and provides the game data model and the game logic
@@ -45,7 +49,7 @@ private:
 
 	BFont* font1;
 	char text[256];
-
+	ISoundEngine* m_sEngine;
 	Timer* timer;
 	float cft, lft, tbf, fps, avgFps;
 	unsigned int fCount;
@@ -74,6 +78,7 @@ private:
 	OGL_Box* oWall[ARRAY_WALL_NUMBER];
 	Marker* goal;
 
+	bool isColliding;
 	float toX,toY,toZ;
 	bool placingWalls;
 	int wallNumber;
@@ -139,4 +144,6 @@ public:
 	void moveMarkerDown();
 	void moveMarkerRight();
 	void moveMarkerLeft();
+
+	void makeGoal();
 };
